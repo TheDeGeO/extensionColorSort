@@ -1,0 +1,22 @@
+{
+  "manifest_version": 2,
+  "name": "Bookmark Wavelength Sorter",
+  "version": "1.1",
+  "description": "Reorders toolbar bookmarks by favicon color wavelength (red → violet).",
+  "permissions": [
+    "bookmarks",
+    "https://icon.horse/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Sort bookmarks by wavelength"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "bookmark-wavelength@example.com"
+    }
+  }
+}

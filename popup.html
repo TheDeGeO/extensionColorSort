@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root {
+      /* Material Gruvbox Dark Palette */
+      --bg: #1d2021;
+      --surface: #282828;
+      --fg: #ebdbb2;
+      --fg-dim: #a89984;
+      
+      /* Wavelength Colors (Bright Gruvbox) */
+      --wl-red: #fb4934;    /* ~700nm */
+      --wl-orange: #fe8019; /* ~620nm */
+      --wl-yellow: #fabd2f; /* ~580nm */
+      --wl-green: #b8bb26;  /* ~530nm */
+      --wl-aqua: #8ec07c;   /* ~500nm */
+      --wl-blue: #83a598;   /* ~460nm */
+      --wl-purple: #d3869b; /* ~400nm */
+    }
+
+    body {
+      width: 280px;
+      padding: 16px;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--fg);
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--fg);
+    }
+
+    p {
+      margin: 0 0 16px;
+      color: var(--fg-dim);
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    /* Sine Wave Container */
+    .wave-container {
+      width: 100%;
+      height: 60px;
+      margin-bottom: 16px;
+      background-color: var(--surface);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1px solid #3c3836;
+    }
+
+    .sine-wave {
+      width: 100%;
+      height: 100%;
+    }
+
+    .sine-path {
+      fill: none;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      /* Flowing dash animation + color shift animation */
+      animation: 
+        flow 2s linear infinite,
+        wavelength-shift 8s linear infinite;
+    }
+
+    @keyframes flow {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: -40; }
+    }
+
+    @keyframes wavelength-shift {
+      0%    { stroke: var(--wl-red); }
+      16.6% { stroke: var(--wl-orange); }
+      33.3% { stroke: var(--wl-yellow); }
+      50%   { stroke: var(--wl-green); }
+      66.6% { stroke: var(--wl-aqua); }
+      83.3% { stroke: var(--wl-blue); }
+      100%  { stroke: var(--wl-purple); }
+    }
+
+    /* Button Styling */
+    button {
+      width: 100%;
+      padding: 10px;
+      cursor: pointer;
+      background-color: var(--surface);
+      color: var(--fg);
+      border: 1px solid var(--fg-dim);
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      letter-spacing: 0.3px;
+    }
+
+    button:hover {
+      background-color: var(--wl-orange);
+      border-color: var(--wl-orange);
+      color: var(--bg);
+      font-weight: 600;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Status Text */
+    #status {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--fg-dim);
+      min-height: 1.2em;
+      text-align: center;
+      transition: color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <h3>Wavelength Sorter</h3>
+  <p>Reorders your bookmark toolbar by favicon color, from longest wavelength (red) to shortest (violet).</p>
+  
+  <div class="wave-container">
+    <svg class="sine-wave" viewBox="0 0 320 60" preserveAspectRatio="none">
+      <!-- Smooth quadratic bezier sine wave, repeated for seamless looping -->
+      <path 
+        class="sine-path" 
+        d="M-40,30 Q-20,10 0,30 T40,30 T80,30 T120,30 T160,30 T200,30 T240,30 T280,30 T320,30 T360,30" 
+        stroke-dasharray="8 6"
+      />
+    </svg>
+  </div>
+
+  <button id="sort">Sort Toolbar Now</button>
+  <div id="status"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
